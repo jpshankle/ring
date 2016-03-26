@@ -1,12 +1,14 @@
-$fa = .6;
-$fs = .6;
+$fa = .1;
+$fs = .1;
 
-module ringLayer(layerTranslate, layerHeight=2, outerWidth=13.4, innerWidth=12.4) {
+width = 12;
+
+module ringLayer(layerTranslate, layerHeight=2, outerWidth=width+1, innerWidth=width) {
     o = layerTranslate % 2 == 0 ? outerWidth : innerWidth;
     i = layerTranslate % 2 == 0 ? innerWidth : outerWidth;
 
     translate([0, 0, layerTranslate * layerHeight])
-          cylinder (h=layerHeight, r=o, r2=i);
+          cylinder (h=layerHeight, r=i, r2=o);
 }
 
 difference () {
@@ -17,5 +19,5 @@ difference () {
         ringLayer(3);
     }
     translate([0,0,-1])
-        cylinder (h=10, r=11);
+        cylinder (h=10, r=width-1);
 }
