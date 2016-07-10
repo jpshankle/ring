@@ -1,23 +1,17 @@
-module ringLayer(rotate) {
-     rotate(rotate)
-     rotate_extrude($fn = 10) {
-          translate([11.6, 0, 0]) {
-               square([1.4,2.5]);
-          }
-     }
+module ringLayer(t) {
+     translate(t[0])
+         rotate(t[1])
+         rotate_extrude($fn = 50) {
+         translate([12, 0, 0]) {
+              square([1, 5]);
+         }
+    }
 }
 
-for(i = [
-         [8, 1, 0],
-         [0, 8, 1],
-         [1, 0, 8],
-         [16, 0, 0],
-         [0, 16, 0],
-         [0, 0, 16],
-         [24, 2, 0],
-         [0, 24, 2],
-         [2, 0, 24]
+for(t = [
+         [[0, 0, 0], [0, 0, 0]],
+         [[.6, 0, 2], [9, 0, 9]],
+         [[-.6, 0, 4], [0, 9, 18]]
    ]) {
-     ringLayer(i);
+     ringLayer(t);
 }
- 
