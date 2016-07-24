@@ -3,7 +3,7 @@ module ringLayer(t) {
          rotate(t[1])
          rotate_extrude($fn = 50) {
          translate([12, 0, 0]) {
-              square([1, 4]);
+              square([1.5, 7]);
          }
     }
 }
