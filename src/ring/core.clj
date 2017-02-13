@@ -10,15 +10,26 @@
 
 (defn oneRing
   "One ring that goes with more rings"
-  [{:keys [squareone squaretwo translation]} rotation]
-  (->>
-    (square squareone squaretwo)
-    (translate translation)
-    (extrude-rotate)))
+  [{:keys [squareone squaretwo translation]} outertranslation rotation]
+  (translate outertranslation
+  (rotatec rotation
+    (extrude-rotate
+      (translate translation
+        (square squareone squaretwo))))))
+
+(def twodring
+  (union
+    (oneRing standardSize
+      [0 0 0]
+      [-0.15 0 0])
+    (oneRing standardSize
+      [0.7 0 0]
+      [0.15 0 0])
+    (oneRing standardSize
+      [0 0.7 0]
+      [0 0.15 0])))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (def twodring
-    (oneRing standardSize 0))
   (spit "dist/2dring.scad" (write-scad twodring)))
