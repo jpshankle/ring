@@ -4,14 +4,18 @@
            [scad-clj.model :refer :all]))
 
 (def standardSize {
-  :squareone 1.8
-  :squaretwo 7
-  :translation [12.5, 0, 0]})
+  :squareone 1.5
+  :squaretwo 3
+  :translation [12.2, 0, 0]})
 
 (def ringShapes [
   [[0 0 0]   [-0.15 0 0]]
   [[0.7 0 0] [0.15 0 0]]
-  [[0 0.7 0] [0 0.15 0]]])
+  [[0 0.7 0] [0 0.15 0]]
+  [[0 0 5]   [-0.15 0 5]]
+  [[0.7 0 5] [0.15 0 5]]
+  [[0 0.7 5] [0 0.15 5]]
+  ])
 
 (defn oneRing
   "One ring that goes with more rings"
