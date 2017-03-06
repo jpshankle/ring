@@ -1,33 +1,24 @@
 (ns ring.core
   (:gen-class)
   (require [scad-clj.scad :refer :all]
-           [scad-clj.model :refer :all]))
+           [scad-clj.model :refer :all]
+           [clojure.data.json :as json]))
 
-(def standardSize {
-  :squareone 1.5
-  :squaretwo 3
-  :translation [12.2, 0, 0]})
-
-(def ringShapes [
-  [[0 0 0]   [-0.15 0 0]]
-  [[0.7 0 0] [0.15 0 0]]
-  [[0 0.7 0] [0 0.15 0]]
-  [[0 0 5]   [-0.15 0 5]]
-  [[0.7 0 5] [0.15 0 5]]
-  [[0 0.7 5] [0 0.15 5]]
-  ])
+(def shapes
+ (json/read-str
+   (slurp "src/ring/shapes.json") :key-fn keyword))
 
 (defn oneRing
   "One ring that goes with more rings"
-  [{:keys [squareone squaretwo translation]} [outertranslation rotation]]
+  [{:keys [square-one square-two translation]} [outertranslation rotation]]
   (translate outertranslation
   (rotatec rotation
     (extrude-rotate
       (translate translation
-        (square squareone squaretwo))))))
+        (square square-one square-two))))))
 
 (defn twodring
-  "creates a ring from a size and a vector of rings"
+  "creates a ring from size and a vector of rings"
   [size rings]
   (map #(oneRing size %) rings))
 
@@ -36,4 +27,4 @@
   [& args]
   (spit "dist/2dring.scad"
     (write-scad
-      (twodring standardSize ringShapes))))
+      (twodring (:size shapes) (:shapes shapes)))))
